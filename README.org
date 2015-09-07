@@ -1,0 +1,42 @@
+#+TITLE: Vagrant Hadoop Environment (Multiple Node)
+
+*NOTE YET COMPLETED*
+
+* Introduction
+
+This follows the installation instructions for a single hadoop
+node taken from [1].
+
+* Setup Instructions
+
+This will require two components to be installed:
+- VirtualBox - 
+- Vagrant - https://www.vagrantup.com/
+
+The following steps sjould be sufficient:
+
+- *cd <Clone Directory>*
+- *vagrant up* which will build the virtual machine (will take a while
+  depending on environment/network speed).
+
+  Note: This first time the VM is created, it is best to do a restart
+  from scratch (reboot can be requird to finalise some installs).
+  - *vagrant halt*
+  - *vagrant up*
+
+Then it should be possible to login to the vagrant machine try the 
+examples.
+
+* Start Hadoop services
+
+start-dfs.sh
+start-yarn.sh
+jps
+
+* Run Examples
+
+hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar pi 2 5
+
+* Pointers
+
+[1] https://docs.google.com/document/d/175XgSxkTKcUuVqA3QlPSZX_bYFuHrEWBw67g36uiLPk/edit
