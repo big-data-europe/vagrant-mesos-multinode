@@ -19,6 +19,6 @@
 <configuration>
   <property>
     <name>fs.default.name</name>
-    <value>hdfs://localhost:9000</value>
+    <value>hdfs://VagrantHadoopMultiMaster:54310</value>
   </property>
 </configuration>

@@ -48,13 +48,15 @@ cp /vagrant/config-files/yarn-site.xml /usr/local/hadoop/etc/hadoop
 cp /vagrant/config-files/hdfs-site.xml /usr/local/hadoop/etc/hadoop
 cp /vagrant/config-files/mapred-site.xml.template /usr/local/hadoop/etc/hadoop
 cp /vagrant/config-files/hduser.bashrc /home/hduser/.bashrc
+cp /vagrant/config-files/masters /usr/local/hadoop/etc/hadoop/masters
+cp /vagrant/config-files/slaves /usr/local/hadoop/etc/hadoop/slaves
 
 ###############################################################
 # Format the hdfs system
 source /home/hduser/.bashrc
 hdfs namenode -format
 
-###############################################################
+x###############################################################
 start-dfs.sh
 start-yarn.sh
 jps
@@ -63,11 +65,6 @@ jps
 # Run the example suggested
 hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar pi 2 5
 
-###############################################################
-# Change the default homepage
-echo "user_pref(\"browser.startup.homepage\", \"http://localhost:28080/unifiedviews\");" >> /etc/iceweasel/pref/iceweasel.js
-echo "_user_pref(\"browser.startup.homepage\", \"http://localhost:28080/unifiedviews\");" >> /etc/iceweasel/profile/prefs.js
- 
 ###############################################################
 apt-get autoclean
 echo "****** done with bootstrap"
