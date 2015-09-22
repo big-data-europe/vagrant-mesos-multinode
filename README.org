@@ -39,4 +39,4 @@ hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.
 
 * Pointers
 
-[1] https://docs.google.com/document/d/175XgSxkTKcUuVqA3QlPSZX_bYFuHrEWBw67g36uiLPk/edit
+[1] https://docs.google.com/document/d/1rO7bg0uQH5uzxzRoq0gNdvubpWNA5XIkdGiwhyeh9wo/edit

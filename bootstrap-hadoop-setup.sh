@@ -1,17 +1,4 @@
-#!/usr/bin/env bash
-#################################################################
-# Standard System Updates.
-apt-get install -y xinit xterm iceweasel gnome-terminal gnome-shell
-apt-get install -y dkms virtualbox-guest-dkms virtualbox-guest-x11
-apt-get install -y gdm3 apache2 libapache2-mod-auth-cas debconf-utils dpkg-dev build-essential quilt gdebi
-dpkg-reconfigure gdm3
-
-# Now start to setup for building unified views, etc.
-apt-get install -y openjdk-7-jre openjdk-7-jdk
-apt-get install -y tomcat7 git maven bash emacs nano vim
-apt-get install -y openssh-server
-echo "JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64" >> /etc/default/tomcat7
-
+#!/bin/bash
 ###############################################################
 # Create necessary addition users and groups (default passwords)
 addgroup hadoop --disabled-password
@@ -35,7 +22,6 @@ popd
 
 ###############################################################
 # Setup other services
-echo "vagrant ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vagrant
 echo "hduser ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/hduser
 
 ###############################################################
@@ -48,15 +34,15 @@ cp /vagrant/config-files/yarn-site.xml /usr/local/hadoop/etc/hadoop
 cp /vagrant/config-files/hdfs-site.xml /usr/local/hadoop/etc/hadoop
 cp /vagrant/config-files/mapred-site.xml.template /usr/local/hadoop/etc/hadoop
 cp /vagrant/config-files/hduser.bashrc /home/hduser/.bashrc
+cp /vagrant/config-files/masters /usr/local/hadoop/etc/hadoop/masters
 cp /vagrant/config-files/slaves /usr/local/hadoop/etc/hadoop/slaves
 
 ###############################################################
 # Format the hdfs system
-# source /home/hduser/.bashrc
-# hdfs namenode -format
+source /home/hduser/.bashrc
+hdfs namenode -format
 
 ###############################################################
-apt-get autoclean
-echo "****** done with bootstrap"
-###############################################################
-
+start-dfs.sh
+start-yarn.sh
+jps
