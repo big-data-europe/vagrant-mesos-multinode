@@ -19,6 +19,7 @@
 <configuration>
   <property>
     <name>fs.default.name</name>
-    <value>hdfs://master1:54310</value>
+    <value>hdfs://192.168.0.10:54310</value>
   </property>
 </configuration>
+

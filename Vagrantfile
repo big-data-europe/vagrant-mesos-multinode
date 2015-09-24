@@ -1,70 +1,53 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-GUI = false
+MASTERGUI = true
 
 RAM = 2048
 SLAVERAM = 2048
 MASTERRAM = 4096
 
-NETWORK = "192.168.1."
+NETWORK = "192.168.0."
 NETMASK = "255.255.255.0"
 
 MASTERBOX="box-cutter/ubuntu1404-desktop"
+MASTERBUILD="bootstrap-master.sh"
+
 SLAVEBOX="ubuntu/trusty64"
+SLAVEBUILD="bootstrap-mesoshdfsnode.sh"
 
-MASTERS = {
-  "master1" => [NETWORK+"10",MASTERRAM,GUI,MASTERBOX,"1"],
-  "master2" => [NETWORK+"11",MASTERRAM,GUI,MASTERBOX,"2"]
-}
-
-SLAVES = {
-  "slave1" => [NETWORK+"1",SLAVERAM,SLAVEBOX],
-  "slave2" => [NETWORK+"2",SLAVERAM,SLAVEBOX]
+# #############################################################################
+# The list of machines to be created. This should list all the optional things
+# 
+MACHINES = {
+  "master1" => [NETWORK+"10",MASTERRAM,MASTERGUI,MASTERBOX,"1",MASTERBUILD],
+  "master2" => [NETWORK+"11",MASTERRAM,MASTERGUI,MASTERBOX,"2",MASTERBUILD],
+  "slave1"  => [NETWORK+"5",SLAVERAM,false,SLAVEBOX,"3",SLAVEBUILD],
+  "slave2"  => [NETWORK+"6",SLAVERAM,false,SLAVEBOX,"4",SLAVEBUILD]
 }
 
 Vagrant.configure(2) do |config|
-  SLAVES.each do | (name, cfg) |
-    ipaddr, ram, box, id = cfg
+  
+ # Always share the parent folder.
+ config.vm.synced_folder ".", "/vagrant"
 
-    config.vm.define name do |machine|
-      machine.vm.box     = box
-      machine.vm.guest = :debian
-      machine.vm.provider "virtualbox" do |vbox|
-        vbox.gui    = false
-        vbox.memory = ram
-        vbox.customize ["modifyvm", :id, "--vram", 64]
-        # vbox.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-        # vbox.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+ MACHINES.each do | (name, cfg) |
+   ipaddr, ram, gui, box, id, build = cfg
+
+   # For each of the machines create with the required configurations.
+   
+   config.vm.define name do |smachine|
+      smachine.vm.box     = box
+      smachine.vm.network "public_network", ip: ipaddr, :netmask => NETMASK
+      smachine.vm.hostname = name
+      smachine.vm.provision :shell, path: build, args: [id,ipaddr]
+      smachine.vm.provider "virtualbox" do |svbox|
+        svbox.name   = "vm"+name
+        svbox.gui    = gui
+        svbox.memory = ram
+        svbox.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+        svbox.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
       end
-      machine.vm.hostname = name
-      machine.vm.network 'private_network', ip: ipaddr, netmask: NETMASK
-      machine.vm.provision :shell,
-                           path: "bootstrap-mesoshdfsnode.sh",
-                           args: id
-      machine.vm.synced_folder ".", "/vagrant"
-    end
-  end
-
-  MASTERS.each do | (name, cfg) |
-    ipaddr, ram, gui, box, id = cfg
-
-    config.vm.define name do |machine|
-      machine.vm.box     = box
-      machine.vm.guest = :debian
-      machine.vm.provider "virtualbox" do |vbox|
-        vbox.gui    = gui
-        vbox.memory = ram
-        vbox.customize ["modifyvm", :id, "--vram", 64]
-        # vbox.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-        # vbox.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
-      end
-      machine.vm.hostname = name
-      machine.vm.network 'private_network', ip: ipaddr, netmask: NETMASK
-      machine.vm.provision :shell,
-                           path: "bootstrap-master.sh",
-                           args: id
-      machine.vm.synced_folder ".", "/vagrant"
-    end
-  end
+     end
+   end
 end

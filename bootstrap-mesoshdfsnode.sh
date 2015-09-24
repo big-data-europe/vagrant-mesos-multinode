@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+SLAVE=$1
+IP=$2
 
 export PATH="/vagrant:$PATH"
 
@@ -17,6 +19,13 @@ bootstrap-hadoop-setup.sh
 bootstrap-mesos-setup.sh
 mkdir -p /etc/mesos-slave
 cp /vagrant/config-files/masters /etc/mesos-slave/master
+
+# Get current IP (assuming set correctly)
+echo ${IP} | tee /etc/mesos-slave/ip
+cp /etc/mesos-slave/ip /etc/mesos-slave/hostname
+
+# Allow docker containers
+echo 'docker,mesos' | sudo tee /etc/mesos-slave/containerizers
 
 # Make sure zookeeper not on slaves
 sudo stop zookeeper
