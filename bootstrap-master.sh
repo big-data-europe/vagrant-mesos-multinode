@@ -52,18 +52,18 @@ echo "127.0.0.1    vmmaster${MASTER}" >> /etc/hosts
 echo "${IP}        vmmaster${MASTER}" >> /etc/hosts
 
 # Switch off the slave setup
-echo manual > /etc/init/mesos-slave.override
+echo "manual" > /etc/init/mesos-slave.override
+
+update-rc.d zookeeper defaults
+update-rc.d mesos-master defaults
+update-rc.d marathon defaults
+update-rc.d chronos defaults
 
 # Setup startup....
 service zookeeper start
 service mesos-master start
 service marathon start
 service chronos start
-
-update-rc.d zookeeper defaults
-update-rc.d mesos-master defaults
-update-rc.d marathon defaults
-update-rc.d chronos defaults
 
 ###############################################################
 # Change the default homepage
