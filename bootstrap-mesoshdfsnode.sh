@@ -25,11 +25,15 @@ echo ${IP} | tee /etc/mesos-slave/ip
 cp /etc/mesos-slave/ip /etc/mesos-slave/hostname
 
 # Allow docker containers
-echo 'docker,mesos' | sudo tee /etc/mesos-slave/containerizers
+echo 'docker,mesos' | tee /etc/mesos-slave/containerizers
 
 # Make sure zookeeper not on slaves
-sudo stop zookeeper
+service zookeeper stop
 echo manual | sudo tee /etc/init/zookeeper.override
+
+# Switch off the master node stuff
+service mesos-master stop
+echo manual > /etc/init/mesos-master.override
 
 # Switch on the services, etc.
 update-rc.d mesos-slave defaults

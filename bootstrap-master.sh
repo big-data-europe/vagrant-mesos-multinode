@@ -20,13 +20,18 @@ apt-get install -y openssh-server
 bootstrap-mesos-setup.sh
 bootstrap-hadoop-setup.sh
 
+# Stop all services so the details can be updated safely.
+service zookeeper stop
+service mesos-master stop
+service marathon stop
+
 # Configure Zookeeper
-mkdir -p /etc/zookeeper/conf/myid/var/lib/zookeeper
 mkdir -p /etc/zookeeper/conf
+mkdir -p /var/lib/zookeeper
 echo ${MASTER} > /etc/zookeeper/conf/myid
 echo ${MASTER} > /var/lib/zookeeper/myid
-cat config-files/zoo.cfg >> /etc/zookeeper/conf/zoo.cfg
-cp config-files/zk.cfg /etc/mesos/zk
+cat /vagrant/config-files/zoo.cfg >> /etc/zookeeper/conf/zoo.cfg
+cp /vagrant/config-files/zk.cfg /etc/mesos/zk
 
 # Configure Mesos
 # (eth0 is the ip assigned via NAT - provided IP is given on bridged eth1)
@@ -37,31 +42,33 @@ cp /etc/mesos-master/ip /etc/mesos-master/hostname
 mkdir -p /etc/marathon/conf
 cp /etc/mesos-master/hostname /etc/marathon/conf
 cp /etc/mesos/zk /etc/marathon/conf/master
-cp config-files/marathon.cfg /etc/marathon/conf/zk
+cp /vagrant/config-files/marathon.cfg /etc/marathon/conf/zk
 
 # Install Chronos (http://master:4400/)
 apt-get -y install chronos
 
+# Add master pointer to the hosts list
+echo "127.0.0.1    vmmaster${MASTER}" >> /etc/hosts
+echo "${IP}        vmmaster${MASTER}" >> /etc/hosts
+
+# Switch off the slave setup
+echo manual > /etc/init/mesos-slave.override
+
 # Setup startup....
-service zookeeper restart
+service zookeeper start
 service mesos-master start
-service mesos-slave start
 service marathon start
 service chronos start
 
 update-rc.d zookeeper defaults
 update-rc.d mesos-master defaults
-update-rc.d mesos-slave defaults
 update-rc.d marathon defaults
 update-rc.d chronos defaults
 
-echo "127.0.0.1    master${MASTER}" >> /etc/hosts
-echo "${IP}        master${MASTER}" >> /etc/hosts
-
 ###############################################################
 # Change the default homepage
-echo "user_pref(\"browser.startup.homepage\", \"http://master${MASTER}:5050\");" >> /etc/firefox/syspref.js
-echo "_user_pref(\"browser.startup.homepage\", \"http://master${MASTER}:5050\");" >> /etc/firefox/browser/defaults/preferences/syspref.js
+echo "user_pref(\"browser.startup.homepage\", \"http://${IP}:5050\");" >> /etc/firefox/syspref.js
+echo "_user_pref(\"browser.startup.homepage\", \"http://${IP}:5050\");" >> /etc/firefox/pref/syspref.js
 
 ###############################################################
 echo "vagrant ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vagrant
