@@ -17,8 +17,8 @@ apt-get install -y git maven bash emacs nano vim firefox
 apt-get install -y openssh-server
 
 ###############################################################
+bootstrap-hadoop-setup.sh $IP
 bootstrap-mesos-setup.sh
-bootstrap-hadoop-setup.sh
 
 # Stop all services so the details can be updated safely.
 service zookeeper stop

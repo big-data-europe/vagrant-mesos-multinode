@@ -15,7 +15,7 @@ apt-get install -y openssh-server
 ###############################################################
 pwd
 echo $PATH
-bootstrap-hadoop-setup.sh
+bootstrap-hadoop-setup.sh $IP
 bootstrap-mesos-setup.sh
 
 mkdir -p /etc/mesos-slave

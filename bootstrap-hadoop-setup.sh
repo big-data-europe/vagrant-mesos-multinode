@@ -1,4 +1,7 @@
 #!/bin/bash
+
+IP=$1
+
 ###############################################################
 # Create necessary addition users and groups (default passwords)
 addgroup hadoop --disabled-password
@@ -7,7 +10,7 @@ adduser hduser sudo
 echo "hduser:password" | chpasswd
 
 # SSH key generation
-su "( echo | ssh-keygen -t rsa -P \"\" ; cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys)" hduser
+su "( echo | ssh-keygen -t rsa -P $IP ; cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys)" hduser
 
 ###############################################################
 # Download hadoop 2.7.1
