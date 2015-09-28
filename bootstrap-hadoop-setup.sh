@@ -27,6 +27,7 @@ echo "hduser ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/hduser
 ###############################################################
 # Update required configuration files
 
+echo "Copy config files"
 pwd
 cp /vagrant/config-files/hadoop-env.sh /usr/local/hadoop/etc/hadoop
 cp /vagrant/config-files/core-site.xml /usr/local/hadoop/etc/hadoop
@@ -39,8 +40,7 @@ cp /vagrant/config-files/slaves /usr/local/hadoop/etc/hadoop/slaves
 
 ###############################################################
 # Format the hdfs system
-source /home/hduser/.bashrc
-hdfs namenode -format
+( source /home/hduser/.bashrc ; hdfs namenode -format )
 
 ###############################################################
 start-dfs.sh

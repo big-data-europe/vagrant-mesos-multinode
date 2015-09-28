@@ -19,11 +19,11 @@ bootstrap-hadoop-setup.sh
 bootstrap-mesos-setup.sh
 
 mkdir -p /etc/mesos-slave
-cp /vagrant/config-files/masters /etc/mesos-slave/master
+# cp /vagrant/config-files/masters /etc/mesos-slave/master
 
 # Get current IP (assuming set correctly)
 echo ${IP} | tee /etc/mesos-slave/ip
-cp /etc/mesos-slave/ip /etc/mesos-slave/hostname
+# cp /etc/mesos-slave/hostname /etc/mesos-slave/ip
 
 # Configure zookeeper, etc.
 mkdir -p /etc/zookeeper/conf
@@ -36,7 +36,7 @@ cp /vagrant/config-files/zk.cfg /etc/mesos/zk
 cp /vagrant/config-files/marathon.cfg /etc/marathon/conf/zk
 
 # Allow docker containers
-echo 'docker,mesos' | tee /etc/mesos-slave/containerizers
+# echo 'docker,mesos' | tee /etc/mesos-slave/containerizers
 
 # Add slave pointer to the hosts list
 echo "127.0.0.1    vmslave${SLAVE}" >> /etc/hosts
