@@ -40,7 +40,10 @@ cp /vagrant/config-files/slaves /usr/local/hadoop/etc/hadoop/slaves
 
 ###############################################################
 # Format the hdfs system
-( source /home/hduser/.bashrc ; hdfs namenode -format )
+pushd /home/hduser
+ source .bashrc
+ hdfs namenode -format
+popd
 
 ###############################################################
 start-dfs.sh

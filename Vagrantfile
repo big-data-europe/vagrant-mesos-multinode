@@ -21,8 +21,8 @@ SLAVEBUILD="bootstrap-mesoshdfsnode.sh"
 MACHINES = {
   "master1" => [NETWORK+"10",MASTERRAM,MASTERGUI,MASTERBOX,"1",MASTERBUILD],
   "master2" => [NETWORK+"11",SLAVERAM,MASTERGUI,MASTERBOX,"2",MASTERBUILD],
-  "slave1"  => [NETWORK+"5",SLAVERAM,false,SLAVEBOX,"3",SLAVEBUILD],
-  "slave2"  => [NETWORK+"6",SLAVERAM,false,SLAVEBOX,"4",SLAVEBUILD]
+  "slave1"  => [NETWORK+"5",SLAVERAM,false,SLAVEBOX,"1",SLAVEBUILD],
+  "slave2"  => [NETWORK+"6",SLAVERAM,false,SLAVEBOX,"2",SLAVEBUILD]
 }
 
 Vagrant.configure(2) do |config|

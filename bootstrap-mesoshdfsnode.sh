@@ -21,16 +21,15 @@ bootstrap-mesos-setup.sh
 mkdir -p /etc/mesos-slave
 # cp /vagrant/config-files/masters /etc/mesos-slave/master
 
-# Get current IP (assuming set correctly)
+# Set current IP (assuming set correctly)
 echo ${IP} | tee /etc/mesos-slave/ip
-# cp /etc/mesos-slave/hostname /etc/mesos-slave/ip
 
 # Configure zookeeper, etc.
 mkdir -p /etc/zookeeper/conf
 mkdir -p /var/lib/zookeeper
 mkdir -p /etc/marathon/conf
-echo ${SLAVE} > /etc/zookeeper/conf/myid
-echo ${SLAVE} > /var/lib/zookeeper/myid
+echo ${SLAVE}${SLAVE} > /etc/zookeeper/conf/myid
+echo ${SLAVE}${SLAVE} > /var/lib/zookeeper/myid
 cat /vagrant/config-files/zoo.cfg >> /etc/zookeeper/conf/zoo.cfg
 cp /vagrant/config-files/zk.cfg /etc/mesos/zk
 cp /vagrant/config-files/marathon.cfg /etc/marathon/conf/zk
