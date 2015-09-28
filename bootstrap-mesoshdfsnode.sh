@@ -57,5 +57,6 @@ service mesos-slave restart
 echo "vagrant ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vagrant
 ###############################################################
 apt-get autoclean
+apt-get autoremove
 echo "****** done with bootstrap"
 ###############################################################

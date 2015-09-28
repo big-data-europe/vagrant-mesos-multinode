@@ -41,6 +41,8 @@ cp /vagrant/config-files/slaves /usr/local/hadoop/etc/hadoop/slaves
 ###############################################################
 # Format the hdfs system
 pushd /home/hduser
+ echo "format hdfs namenode"
+ pwd
  source .bashrc
  hdfs namenode -format
 popd
