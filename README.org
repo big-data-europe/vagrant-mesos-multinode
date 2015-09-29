@@ -1,11 +1,11 @@
-#+TITLE: Vagrant Hadoop Environment (Multiple Node)
-
-*NOTE YET COMPLETED*
+#+TITLE: Vagrant (Multiple Node Setup)
 
 * Introduction
 
-This follows the installation instructions for a single hadoop
-node taken from [1].
+This follows the installation instructions for a multi-node mesos
+setup[1].  The current view is two masters and two slaves (which will
+required 10Gb of RAM to be installed, with a fair amount of disk
+space).
 
 * Setup Instructions
 
@@ -27,11 +27,21 @@ The following steps sjould be sufficient:
 Then it should be possible to login to the vagrant machine try the 
 examples.
 
+* Mesos Testing
+
+Accessing http://192.168.0.10:5050/ should show 2 actives slaves (shutting
+down a slave will leave to it becoming deactivated, etc.)
+
 * Start Hadoop services
 
+Hadoop services are not yet started on boot. So the following will have to be 
+executed as hduser.
+
+#+BEGIN_QUOTE:
 start-dfs.sh
 start-yarn.sh
 jps
+#+END_QUOTE
 
 * Run Examples
 

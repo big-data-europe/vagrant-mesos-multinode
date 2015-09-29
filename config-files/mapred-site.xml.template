@@ -19,7 +19,7 @@
 <configuration>
   <property>
     <name>mapreduce.job.tracker</name>
-    <value>192.168.0.10:54311</value>
+    <value>localhost:54311</value>
   </property>
   <property>
     <name>mapreduce.framework.name</name>

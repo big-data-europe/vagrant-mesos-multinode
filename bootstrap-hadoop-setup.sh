@@ -10,7 +10,7 @@ adduser hduser sudo
 echo "hduser:password" | chpasswd
 
 # SSH key generation
-su "( echo | ssh-keygen -t rsa -P $IP ; cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys)" hduser
+su "( echo | ssh-keygen -t rsa -P \'\'; cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys)" hduser
 
 ###############################################################
 # Download hadoop 2.7.1
@@ -38,6 +38,7 @@ cp /vagrant/config-files/yarn-site.xml /usr/local/hadoop/etc/hadoop
 cp /vagrant/config-files/hdfs-site.xml /usr/local/hadoop/etc/hadoop
 cp /vagrant/config-files/mapred-site.xml.template /usr/local/hadoop/etc/hadoop
 cp /vagrant/config-files/hduser.bashrc /home/hduser/.bashrc
+cp /vagrant/config-files/hduser.bashrc /home/vagrant/.bashrc
 cp /vagrant/config-files/masters /usr/local/hadoop/etc/hadoop/masters
 cp /vagrant/config-files/slaves /usr/local/hadoop/etc/hadoop/slaves
 
@@ -49,8 +50,3 @@ pushd /home/hduser
  source .bashrc
  hdfs namenode -format
 popd
-
-###############################################################
-start-dfs.sh
-start-yarn.sh
-jps

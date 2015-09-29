@@ -18,6 +18,11 @@ apt-get install -y openssh-server
 
 ###############################################################
 bootstrap-hadoop-setup.sh $IP
+start-dfs.sh
+start-mapred.sh
+jps
+
+###############################################################
 bootstrap-mesos-setup.sh
 
 # Stop all services so the details can be updated safely.
