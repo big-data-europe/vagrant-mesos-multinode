@@ -12,7 +12,7 @@ echo "APT::Periodic::Update-Package-Lists \"0\";" > /etc/apt/apt.conf.d/10period
 apt-get install -y dkms virtualbox-guest-dkms build-essential
 
 # Now start to setup for building unified views, etc.
-apt-get install -y openjdk-7-jre openjdk-7-jdk
+apt-get install -y openjdk-7-jre openjdk-7-jdk curl
 apt-get install -y git maven bash emacs nano vim firefox
 apt-get install -y openssh-server
 

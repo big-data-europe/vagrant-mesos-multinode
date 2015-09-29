@@ -35,7 +35,9 @@ cp /vagrant/config-files/zk.cfg /etc/mesos/zk
 cp /vagrant/config-files/marathon.cfg /etc/marathon/conf/zk
 
 # Allow docker containers
-# echo 'docker,mesos' | tee /etc/mesos-slave/containerizers
+echo 'docker,mesos' | tee /etc/mesos-slave/containerizers
+# Recommended (http://frankhinek.com/deploy-docker-containers-on-mesos-0-20/)
+echo "5mins" | tee /etc/mesos-slave/executor_registration_timeout
 
 # Add slave pointer to the hosts list
 echo "127.0.0.1    vmslave${SLAVE}" >> /etc/hosts
