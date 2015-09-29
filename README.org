@@ -4,14 +4,23 @@
 
 This follows the installation instructions for a multi-node mesos
 setup[1].  The current view is two masters and two slaves (which will
-required 10Gb of RAM to be installed, with a fair amount of disk
-space).
+required approx 10Gb of RAM for the install to succeed. It will also
+required a fair amount of disk space).
+
+Machines will be created with IP numbers (masters): 192.168.0.10,
+192.168.0.11 and slaves will be created with IP numbers: 192.168.0.5
+and 192.168.0.6. If these aren't appropriate then the Vagrantfile and
+config-files will have to be updated.
+
+*Note:*  This is simply to experiment with the tools (and to document the
+setup a little further).
 
 * Setup Instructions
 
 This will require two components to be installed:
-- VirtualBox - 
-- Vagrant - https://www.vagrantup.com/
+
+- VirtualBox - 5.0 (..)
+- Vagrant - 1.7.4 (https://www.vagrantup.com/)
 
 The following steps sjould be sufficient:
 
@@ -20,12 +29,15 @@ The following steps sjould be sufficient:
   depending on environment/network speed).
 
   Note: This first time the VM is created, it is best to do a restart
-  from scratch (reboot can be requird to finalise some installs).
+  from scratch (rebooting is requird to finalise some network setup).
+
   - *vagrant halt*
   - *vagrant up*
 
-Then it should be possible to login to the vagrant machine try the 
-examples.
+Then it should be possible to login to the machine(s) using:
+
+- *vagrant ssh slave1* 
+
 
 * Mesos Testing
 
