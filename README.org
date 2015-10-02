@@ -28,8 +28,8 @@ The following steps sjould be sufficient:
 - *vagrant up* which will build the virtual machine (will take a while
   depending on environment/network speed).
 
-  Note: This first time the VM is created, it is best to do a restart
-  from scratch (rebooting is requird to finalise some network setup).
+  Note: This first time the VM is created, it is *required* to do a restart
+  from scratch (rebooting will finalise some network setup).
 
   - *vagrant halt*
   - *vagrant up*
