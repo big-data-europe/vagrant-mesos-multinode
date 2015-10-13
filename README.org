@@ -1,4 +1,4 @@
-#+TITLE: Vagrant (Multiple Node Setup)
+#+TITLE: Vagrant Mesos (2 master/2 slave setup)
 
 * Introduction
 
@@ -7,12 +7,18 @@ setup [[https://docs.google.com/document/d/1rO7bg0uQH5uzxzRoq0gNdvubpWNA5XIkdGiw
 
 The current view is two masters and two slaves (which will required
 approx 10Gb of RAM for the install to succeed. It will also required a
-fair amount of disk space).
+fair amount of disk space). The number of masters and slaves can be
+easily extended using the pattern outlines in the /Vagrantfile/, but
+system resorces will need to be available.
 
-Machines will be created with IP numbers (masters): 192.168.0.10,
-192.168.0.11 and slaves will be created with IP numbers: 192.168.0.5
-and 192.168.0.6. If these aren't appropriate then the Vagrantfile and
-config-files will have to be updated.
+Virtual Machines will be created with private space IP numbers:
+
+- masters :: 192.168.0.10, 192.168.0.11, and, 
+
+- slaves :: 192.168.0.5 and 192.168.0.6. 
+
+If these aren't appropriate then the Vagrantfile and config-files will
+have to be updated.
 
 *Note:* This is simply to experiment with the tools (and to document
 the setup a little further).
@@ -20,8 +26,15 @@ the setup a little further).
 * Setup Instructions
 This will require two components to be installed:
 
-- VirtualBox - 5.0.6 (..)
+- VirtualBox - 5.0.6 (https://www.virtualbox.org)
 - Vagrant - 1.7.4 (https://www.vagrantup.com/)
+
+There is also a need for a command-line tool such as bash, shell, etc
+and that the paths are set correctly for 'vagrant' to be
+executable. These are the latest versions which have been tested
+(prior versions will not be tested). On Windows, [[www.cygwin.org][cygwin]] could be
+installed which will provide bash along with an assortment of other
+GNU open-source tools.
 
 * Building of the VMs
 The following steps should be sufficient:
