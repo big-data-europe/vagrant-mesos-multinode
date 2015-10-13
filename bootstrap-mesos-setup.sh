@@ -1,5 +1,6 @@
 #!/bin/bash
 ####################################################################
+# Setup of Mesos base software
 apt-get install -y autoconf libtool
 apt-get -y install build-essential python-dev python-boto \
 	libcurl4-nss-dev libsasl2-dev maven libapr1-dev libsvn-dev

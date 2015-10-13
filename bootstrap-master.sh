@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 #################################################################
-# Standard System Updates.
+# Creation of a MASTER node.
 MASTER=$1
 IP=$2
+
+###############################################################
 
 export PATH="/vagrant:$PATH"
 
@@ -13,15 +15,15 @@ echo "APT::Periodic::Update-Package-Lists \"0\";" > /etc/apt/apt.conf.d/10period
 apt-get install -y dkms virtualbox-guest-dkms build-essential
 
 ###############################################################
-# Basic setup required.
-
+# Basic setup required (for a master - which will have a GUI)
 apt-get install -y openjdk-7-jre openjdk-7-jdk curl
 apt-get install -y git maven bash emacs nano vim firefox
 apt-get install -y openssh-server
-bootstrap-docker.sh
+             # Install docker as required on the base machines
+bootstrap-docker.sh 
 
 ###############################################################
-
+# hadoop setup for the given IP
 bootstrap-hadoop-setup.sh $IP
 start-dfs.sh
 start-mapred.sh
@@ -32,6 +34,7 @@ jps
 ###############################################################
 
 ###############################################################
+# Include Mesos
 bootstrap-mesos-setup.sh
 
 ###############################################################
@@ -51,7 +54,9 @@ cp /vagrant/config-files/zk.cfg /etc/mesos/zk
 
 ###############################################################
 # Configure Mesos
-# (eth0 is the ip assigned via NAT - provided IP is given on bridged eth1)
+#   correct setup requires restart of machine after this
+#   script has finished (eth0 is the ip assigned via NAT
+#   - provided IP is given on bridged eth1)
 echo ${IP} | tee /etc/mesos-master/ip
 cp /etc/mesos-master/ip /etc/mesos-master/hostname
 
@@ -96,6 +101,6 @@ echo "_user_pref(\"browser.startup.homepage\", \"http://${IP}:5050\");" >> /etc/
 echo "vagrant ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vagrant
 ###############################################################
 apt-get autoclean
-echo "****** done with bootstrap - master ${MASTER}"
+echo "****** done with bootstrap - master ${MASTER} - REBOOT REQUIRED"
 ###############################################################
 

@@ -3,9 +3,11 @@
 * Introduction
 
 This follows the installation instructions for a multi-node mesos
-setup [1].  The current view is two masters and two slaves (which will
-required approx 10Gb of RAM for the install to succeed. It will also
-required a fair amount of disk space).
+setup [[https://docs.google.com/document/d/1rO7bg0uQH5uzxzRoq0gNdvubpWNA5XIkdGiwhyeh9wo/edit][(Installation Instructions]]).
+
+The current view is two masters and two slaves (which will required
+approx 10Gb of RAM for the install to succeed. It will also required a
+fair amount of disk space).
 
 Machines will be created with IP numbers (masters): 192.168.0.10,
 192.168.0.11 and slaves will be created with IP numbers: 192.168.0.5
@@ -42,6 +44,7 @@ Then it should be possible to login to the machine(s) using:
 
 Accessing http://192.168.0.10:5050/ should show 2 actives slaves (shutting
 down a slave will leave to it becoming deactivated, etc.)
+
 ** Basic Tests
 - Start the system, access the link and check that 2 slaves are visible
 - Shut down one of the slaves (and watch it pass from deactivated to gone)
@@ -59,6 +62,3 @@ start-yarn.sh
 jps
 #+END_QUOTE
 
-* Pointers
-
-[1] https://docs.google.com/document/d/1rO7bg0uQH5uzxzRoq0gNdvubpWNA5XIkdGiwhyeh9wo/edit

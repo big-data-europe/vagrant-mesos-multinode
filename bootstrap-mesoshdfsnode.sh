@@ -1,27 +1,31 @@
 #!/usr/bin/env bash
+###############################################################
+# SLAVE node setup.
 SLAVE=$1
 IP=$2
 
+###############################################################
 export PATH="/vagrant:$PATH"
 
 ###############################################################
 # Basic setup required.
-
 apt-get install -y openjdk-7-jre openjdk-7-jdk
 apt-get install -y maven bash emacs nano vim
 apt-get install -y openssh-server
+                              # Install/Setup Docker facilities
 bootstrap-docker.sh
 
 ###############################################################
-pwd
-echo $PATH
+# Install hadoop and mesos on the slave node (IP has to be
+# passed infor it to be set correctly).
 bootstrap-hadoop-setup.sh $IP
 bootstrap-mesos-setup.sh
 
+###############################################################
 mkdir -p /etc/mesos-slave
 # cp /vagrant/config-files/masters /etc/mesos-slave/master
 
-# Set current IP (assuming set correctly)
+# Set current IP (assuming set correctly - requires reboot)
 echo ${IP} | tee /etc/mesos-slave/ip
 
 ###############################################################
@@ -66,5 +70,5 @@ echo "vagrant ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/vagrant
 ###############################################################
 apt-get autoclean
 apt-get autoremove
-echo "****** done with bootstrap"
+echo "****** done with slave node bootstrap - REBOOT REQUIRED"
 ###############################################################
