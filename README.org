@@ -3,7 +3,7 @@
 * Introduction
 
 This follows the installation instructions for a multi-node mesos
-setup[1].  The current view is two masters and two slaves (which will
+setup [1].  The current view is two masters and two slaves (which will
 required approx 10Gb of RAM for the install to succeed. It will also
 required a fair amount of disk space).
 
@@ -12,17 +12,17 @@ Machines will be created with IP numbers (masters): 192.168.0.10,
 and 192.168.0.6. If these aren't appropriate then the Vagrantfile and
 config-files will have to be updated.
 
-*Note:*  This is simply to experiment with the tools (and to document the
-setup a little further).
+*Note:* This is simply to experiment with the tools (and to document
+the setup a little further).
 
 * Setup Instructions
-
 This will require two components to be installed:
 
-- VirtualBox - 5.0 (..)
+- VirtualBox - 5.0.6 (..)
 - Vagrant - 1.7.4 (https://www.vagrantup.com/)
 
-The following steps sjould be sufficient:
+* Building of the VMs
+The following steps should be sufficient:
 
 - *cd <Clone Directory>*
 - *vagrant up* which will build the virtual machine (will take a while
@@ -38,11 +38,15 @@ Then it should be possible to login to the machine(s) using:
 
 - *vagrant ssh slave1* 
 
-
 * Mesos Testing
 
 Accessing http://192.168.0.10:5050/ should show 2 actives slaves (shutting
 down a slave will leave to it becoming deactivated, etc.)
+** Basic Tests
+- Start the system, access the link and check that 2 slaves are visible
+- Shut down one of the slaves (and watch it pass from deactivated to gone)
+- Restart the slave and check it becomes active again.
+- power down the master and check the other master continues
 
 * Start Hadoop services
 
