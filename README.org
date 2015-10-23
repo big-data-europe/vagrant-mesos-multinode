@@ -1,77 +1,83 @@
 #+TITLE: Vagrant Mesos (2 master/2 slave setup)
 
-* Introduction
+This Vagrant installation sets up a minimal Big Data Europe platform
+with two masters and two slaves.  This installation can be used for
+getting a feel of the platform without a lengthy installation
+procedure.
 
-This follows the installation instructions for a multi-node mesos
-setup [[https://docs.google.com/document/d/1rO7bg0uQH5uzxzRoq0gNdvubpWNA5XIkdGiwhyeh9wo/edit][(Installation Instructions]]).
+The Big Data Europe platform provides a generic platform for deploying
+Big Data pipelines.  The instances providing the computation are
+offered through docker images.  See http://github.com/big-data-europe/
+for examples.
 
-The current view is two masters and two slaves (which will required
-approx 10Gb of RAM for the install to succeed. It will also required a
-fair amount of disk space). The number of masters and slaves can be
-easily extended using the pattern outlines in the /Vagrantfile/, but
-system resorces will need to be available.
+* Requirements
+You should ensure that you have the following available in order to
+use the platform:
 
-Virtual Machines will be created with private space IP numbers:
+** Hardware requirements:
+- 10Gb RAM
+- 30Gb Disk space
 
-- masters :: 192.168.0.10, 192.168.0.11, and, 
-
-- slaves :: 192.168.0.5 and 192.168.0.6. 
-
-If these aren't appropriate then the Vagrantfile and config-files will
-have to be updated.
-
-*Note:* This is simply to experiment with the tools (and to document
-the setup a little further).
-
-* Setup Instructions
-This will require two components to be installed:
-
+** Software requirements:
 - VirtualBox - 5.0.6 (https://www.virtualbox.org)
 - Vagrant - 1.7.4 (https://www.vagrantup.com/)
+- CLI (Like GNU Bash on Unix systems, or [[www.cygwin.org][cygwin]] on Windows)
 
-There is also a need for a command-line tool such as bash, shell, etc
-and that the paths are set correctly for 'vagrant' to be
-executable. These are the latest versions which have been tested
-(prior versions will not be tested). On Windows, [[www.cygwin.org][cygwin]] could be
-installed which will provide bash along with an assortment of other
-GNU open-source tools.
+* Starting the cluster
+- /cd <clone directory>/
+- /vagrant up/
 
-* Building of the VMs
-The following steps should be sufficient:
+After first boot: restart the Vagrant instances to correct the network
+configuration.
 
-- *cd <Clone Directory>*
-- *vagrant up* which will build the virtual machine (will take a while
-  depending on environment/network speed).
+- /vagrant halt/
+- /vagrant up/
 
-  Note: This first time the VM is created, it is *required* to do a restart
-  from scratch (rebooting will finalise some network setup).
+You can ssh into the machines using the regular Vagrant commands:
 
-  - *vagrant halt*
-  - *vagrant up*
+/vagrant ssh slave1/
 
-Then it should be possible to login to the machine(s) using:
+* Standard configuration
+The base cluster publishes the following nodes:
 
-- *vagrant ssh slave1* 
+| HOSTNAME |           IP | RAM |
+|----------+--------------+-----|
+| master1  | 192.168.0.10 | 4GB |
+| master2  | 192.168.0.11 | 4GB |
+| slave1   |  192.168.0.5 | 2GB |
+| slave2   |  192.168.0.6 | 2GB |
 
-* Mesos Testing
+The /Vagrantfile/ should be clear to understand and fairly easy to
+alter.
 
-Accessing http://192.168.0.10:5050/ should show 2 actives slaves (shutting
-down a slave will leave to it becoming deactivated, etc.)
+* Playing with the cluster
+The virtual cluster can be used for deploying applications and for
+testing the rigidity of the platform.
 
-** Basic Tests
-- Start the system, access the link and check that 2 slaves are visible
-- Shut down one of the slaves (and watch it pass from deactivated to gone)
-- Restart the slave and check it becomes active again.
-- power down the master and check the other master continues
+** Deploying applications
+See the relevant applications on http://github.com/big-data-europe/
+for more information on how to deploy applications on this cluster.
 
-* Start Hadoop services
+** Trolling the cluster
+Big Data clusters are one of the few machines which like to be
+trolled.  Feeling frustrated, why don't you kill a slave node?  Need a
+bigger up, kill the master.  Clustered systems should stay alive in
+these cases. This minimal setup allows you to play with that usecase.
 
-Hadoop services are not yet started on boot. So the following will have to be 
-executed as hduser.
+- Visit http://192.168.0.10:5050/ which should show 2 actives slaves
+  (shutting down a slave will leave to it becoming deactivated, etc.)
+- Start the system, access the link and check that 2 slaves are
+  visible
+- Shut down one of the slaves (and watch it pass from deactivated to
+  gone)
+- Restart the slave and check it becomes active again
+- Power down the master and check the other master continues
 
-#+BEGIN_QUOTE:
-start-dfs.sh
-start-yarn.sh
-jps
-#+END_QUOTE
 
+* Starting optional Hadoop services
+Hadoop services are not started on boot. In order to use HDFS or YARN,
+execute the following as hduser:
+
+- /start-dfs.sh/
+- /start-yarn.sh/
+- /jps/
