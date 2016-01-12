@@ -19,7 +19,7 @@ use the platform:
 - 30Gb Disk space
 
 ** Software requirements:
-- VirtualBox - 5.0.6 (https://www.virtualbox.org)
+- VirtualBox - 5.0.10 (https://www.virtualbox.org)
 - Vagrant - 1.7.4 (https://www.vagrantup.com/)
 - CLI (Like GNU Bash on Unix systems, or [[www.cygwin.org][cygwin]] on Windows)
 

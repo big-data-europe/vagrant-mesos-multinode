@@ -26,8 +26,11 @@ MACHINES = {
 }
 
 Vagrant.configure(2) do |config|
-  
- # Always share the parent folder.
+  if Vagrant.has_plugin?("vagrant-cachier")
+     config.cache.scope = :box
+  end
+
+  # Always share the parent folder.
  MACHINES.each do | (name, cfg) |
    ipaddr, ram, gui, box, id, build = cfg
 
@@ -45,6 +48,8 @@ Vagrant.configure(2) do |config|
         svbox.memory = ram
         svbox.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
         svbox.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+        svbox.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
+        svbox.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
       end
      end
    end

@@ -25,6 +25,8 @@ bootstrap-docker.sh
 ###############################################################
 # hadoop setup for the given IP
 bootstrap-hadoop-setup.sh $IP
+
+# PATH=??
 start-dfs.sh
 start-mapred.sh
 jps
